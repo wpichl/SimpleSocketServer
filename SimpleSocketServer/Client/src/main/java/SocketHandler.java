@@ -1,10 +1,13 @@
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.Socket;
 
 public class SocketHandler {
     private static SocketHandler mSingleton = null;
-    private static Socket mSocket = null;
+    private Socket mSocket = null;
 
     private SocketHandler() {
 
@@ -20,7 +23,7 @@ public class SocketHandler {
 
     public void startConnection(InetAddress host, Integer port) {
         try {
-            this.mSocket =  new Socket(host, port);
+            this.mSocket = new Socket(host, port);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -29,6 +32,26 @@ public class SocketHandler {
     public void stopConnection() {
         try {
             this.mSocket.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void sendMessage(String message) {
+        try {
+            DataOutputStream out = new DataOutputStream(this.mSocket.getOutputStream());
+            out.writeBytes(message + "\n");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    public String receiveMessage() {
+        try {
+            BufferedReader in = new BufferedReader(new InputStreamReader(this.mSocket.getInputStream()));
+            return in.readLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
