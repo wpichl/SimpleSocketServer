@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.time.LocalTime;
 
@@ -20,7 +21,7 @@ public class ClientHandler implements Runnable {
                 String input = in.readLine();
 
                 if (input.equalsIgnoreCase("identify yourself")) {
-                    out.writeBytes("I am The Server test\n");
+                    out.writeBytes("I am The Server " + InetAddress.getLocalHost().getHostName() + "\n");
                 }
                 else if (input.equalsIgnoreCase("how late is it")) {
                     LocalTime time = LocalTime.now();
@@ -32,6 +33,9 @@ public class ClientHandler implements Runnable {
                     out.close();
                     in.close();
                     this.mSocket.close();
+                }
+                else {
+                    out.writeBytes("Wrong command!\n");
                 }
             }
         } catch (IOException e) {

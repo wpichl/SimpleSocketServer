@@ -43,15 +43,10 @@ public class RuntimeEngine {
             if (input.equalsIgnoreCase("exit")) {
                 this.mRunning = false;
             }
-            else {
-                System.out.println(SocketHandler.getInstance().receiveMessage());
-            }
+
+            System.out.println(SocketHandler.getInstance().receiveMessage());
         }
 
         SocketHandler.getInstance().stopConnection();
-    }
-
-    public void stop() {
-        this.mRunning = false;
     }
 }

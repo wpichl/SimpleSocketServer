@@ -5,7 +5,6 @@ import java.net.Socket;
 public class ConnectionManager {
     private static ConnectionManager mSingleton = null;
     private ServerSocket mServerSocket = null;
-    private boolean mRunning = true;
     private boolean mSocketSetup = false;
 
     private ConnectionManager() {
@@ -21,7 +20,7 @@ public class ConnectionManager {
     }
 
     public void start(int port) {
-        while (this.mRunning) {
+        while (true) {
             if (!this.mSocketSetup) {
                 try {
                     this.mServerSocket = new ServerSocket(port);

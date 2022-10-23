@@ -44,8 +44,6 @@ public class SocketHandler {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 
     public String receiveMessage() {
